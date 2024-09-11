@@ -16,7 +16,8 @@ async function fetchDocuments() {
     throw new Error("No document name in env");
   }
 
-  const { platform } = initClient();
+  const client = initClient();
+  const { platform } = client;
 
   console.log("Fetching documents from contract");
 
@@ -34,6 +35,8 @@ async function fetchDocuments() {
       console.log("Document:", doc.toJSON());
     });
   }
+
+  await client.disconnect();
 }
 
 fetchDocuments().catch(console.error);

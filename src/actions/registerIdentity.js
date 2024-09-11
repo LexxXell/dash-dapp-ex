@@ -1,19 +1,21 @@
-require('dotenv').config()
-const { initClient } = require('../utils')
+require("dotenv").config();
+const { initClient } = require("../utils");
 
-async function createIdentity () {
-  console.log('Creating Identity')
+async function createIdentity() {
+  console.log("Creating Identity");
 
   if (!process.env.MNEMONIC) {
-    throw new Error('Mnemonic not setted')
+    throw new Error("Mnemonic not setted");
   }
 
-  const client = initClient()
+  const client = initClient();
 
-  const identity = await client.platform.identities.register()
+  const identity = await client.platform.identities.register();
 
-  console.log('Done', '\n', `Identity: ${identity.toJSON().id}`)
-  return identity
+  console.log("Done", "\n", `Identity: ${identity.toJSON().id}`);
+  return identity;
+
+  await client.disconnect();
 }
 
-createIdentity().catch(console.error)
+createIdentity().catch(console.error);

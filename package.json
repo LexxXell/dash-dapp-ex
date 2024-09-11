@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "dash:new_mnemonic": "node ./src/actions/newMnemonic.js",
+    "dash:address": "node ./src/actions/getAddress.js",
     "dataContract:deploy": "node ./src/actions/deployContract.js",
     "identity:register": "node ./src/actions/registerIdentity.js",
     "document:push": "node ./src/actions/pushDocument.js",
