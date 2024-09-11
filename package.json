@@ -1,0 +1,20 @@
+{
+  "name": "dash-dapp-ex",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dataContract:deploy": "node ./src/actions/deployContract.js",
+    "identity:register": "node ./src/actions/registerIdentity.js",
+    "document:push": "node ./src/actions/pushDocument.js",
+    "document:get": "node ./src/actions/getDocument.js",
+    "lint": "standard ."
+  },
+  "dependencies": {
+    "dash": "4.2.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "standard": "^17.1.0"
+  }
+}
