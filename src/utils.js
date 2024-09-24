@@ -1,10 +1,15 @@
 const Dash = require("dash");
 
-function initClient() {
+function initClient({ mnemonic } = {}) {
+  if (!mnemonic) {
+    mnemonic = process.env.MNEMONIC;
+  }
+
   const options = {
     network: "testnet",
+    dapiAddress: ["https://44.227.137.77:1443"],
     wallet: {
-      mnemonic: process.env.MNEMONIC,
+      mnemonic,
     },
   };
 

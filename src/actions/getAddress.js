@@ -4,19 +4,18 @@ const { initClient } = require("../utils");
 async function getAddress() {
   console.log("Client initialization");
 
-  if (!process.env.MNEMONIC) {
-    throw new Error("Mnemonic not set");
+  const args = process.argv.slice(2);
+  const mnemonicType = args.includes("claimer")
+    ? "CLAIMER_MNEMONIC"
+    : "MNEMONIC";
+
+  const mnemonic = process.env[mnemonicType];
+
+  if (!mnemonic) {
+    throw new Error(`${mnemonicType} not set`);
   }
 
-  if (!process.env.CONTRACT_ID) {
-    throw new Error("No contract ID in env");
-  }
-
-  if (!process.env.DOCUMENT_NAME) {
-    throw new Error("No document name in env");
-  }
-
-  const client = initClient();
+  const client = initClient({ mnemonic });
   const { wallet } = client;
 
   console.log("Get the first address");
