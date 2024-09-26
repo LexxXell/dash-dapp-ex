@@ -10,8 +10,6 @@ const claimDoc = {
   amountUSD: 500,
 };
 
-console.log(JSON.stringify(claimDoc, null, 2));
-
 async function pushDocument() {
   console.log("Client initialization");
 
@@ -54,4 +52,4 @@ async function pushDocument() {
   await client.disconnect();
 }
 
-// pushDocument().catch(console.error);
+pushDocument().catch(console.error);
