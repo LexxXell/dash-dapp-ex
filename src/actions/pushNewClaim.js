@@ -8,6 +8,7 @@ const claimDoc = {
   taskId: bs58.decode(process.env.MY_TASK_ID),
   amountCredits: 20,
   amountUSD: 500,
+  deliverable: "https://github.com/LexxXell",
 };
 
 async function pushDocument() {
