@@ -20,6 +20,8 @@ async function deployContract() {
     process.env.OWNER_IDENTIFIER
   );
 
+  console.log(identity);
+
   console.log(`Using: ${identity.toJSON().id}`);
 
   const contract = await client.platform.contracts.create(schema, identity);

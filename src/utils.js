@@ -7,15 +7,15 @@ function initClient({ mnemonic } = {}) {
 
   const options = {
     network: "testnet",
-    dapiAddresses: [
-      {
-        protocol: "http",
-        host: "localhost",
-        port: 1443,
-        allowSelfSignedCertificate: true,
-        banCount: 0,
-      },
-    ],
+    // dapiAddresses: [
+    //   {
+    //     protocol: "http",
+    //     host: "localhost",
+    //     port: 1443,
+    //     allowSelfSignedCertificate: true,
+    //     banCount: 0,
+    //   },
+    // ],
     wallet: {
       mnemonic,
     },

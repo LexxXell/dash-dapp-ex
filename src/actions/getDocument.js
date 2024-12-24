@@ -21,19 +21,26 @@ async function fetchDocuments() {
 
   console.log("Fetching documents from contract");
 
-  const documents = await platform.documents.get(
-    `contract.${process.env.DOCUMENT_NAME}`,
-    {
-      where: [],
-    }
-  );
+  const documents = await platform.documents.get(`contract.withdrawal`, {
+    where: [["$ownerId", "=", "8eTDkBhpQjHeqgbVeriwLeZr1tCa6yBGw76SckvD1cwc"]],
+  });
 
   if (documents.length === 0) {
     console.log("No documents found");
   } else {
-    documents.forEach((doc) => {
-      console.log("Document:", doc.toJSON());
-    });
+    documents
+      // .filter(
+      //   (doc) =>
+      //     doc.toJSON()["$ownerId"] ===
+      //     "8eTDkBhpQjHeqgbVeriwLeZr1tCa6yBGw76SckvD1cwc"
+      // )
+      .sort(
+        (a, b) =>
+          a.toJSON().transactionSignHeight - b.toJSON().transactionSignHeight
+      )
+      .forEach((doc) => {
+        console.log("Document:", doc.toJSON());
+      });
   }
 
   await client.disconnect();

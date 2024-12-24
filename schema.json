@@ -1,121 +1,139 @@
 {
-  "Project": {
+  "pools": {
     "type": "object",
     "properties": {
       "name": {
         "position": 0,
         "type": "string",
-        "description": "Project name",
-        "maxLength": 63
+        "description": "The name of the pool",
+        "maxLength": 255
       },
       "description": {
         "position": 1,
         "type": "string",
-        "description": "Project description",
-        "maxLength": 1000
-      },
-      "url": {
-        "position": 2,
-        "type": "string",
-        "description": "Project URL",
-        "maxLength": 255
-      }
-    },
-    "required": ["name", "description", "url", "$createdAt", "$updatedAt"],
-    "additionalProperties": false
-  },
-  "Tasks": {
-    "type": "object",
-    "properties": {
-      "title": {
-        "position": 0,
-        "type": "string",
-        "description": "Task title",
-        "maxLength": 63
-      },
-      "description": {
-        "position": 1,
-        "type": "string",
-        "description": "Task description",
-        "maxLength": 1000
-      },
-      "url": {
-        "position": 2,
-        "type": "string",
-        "description": "Task URL",
+        "description": "The description of the pool",
         "maxLength": 255
       },
-      "assignee": {
-        "position": 3,
-        "type": "array",
-        "description": "Task assignee executor",
-        "byteArray": true,
-        "minItems": 32,
-        "maxItems": 32
-      },
-      "projectId": {
-        "position": 4,
-        "type": "array",
-        "byteArray": true,
-        "minItems": 32,
-        "maxItems": 32
+      "type": {
+        "position": 2,
+        "type": "string",
+        "description": "The type node of the pool",
+        "enum": [
+          "MASTERNODE",
+          "EVONODE"
+        ]
       },
       "status": {
-        "position": 5,
+        "position": 3,
         "type": "string",
-        "description": "Task status",
+        "description": "The status of the pool",
         "enum": [
-          "pending",
-          "in_progress",
-          "completed",
-          "will_not_implement",
-          "paid"
+          "ACTIVE",
+          "INACTIVE",
+          "FILLED"
         ]
       }
     },
-    "comment": {
-      "position": 6,
-      "type": "string",
-      "description": "Change status comment",
-      "maxLength": 1000
-    },
-    "required": ["title", "projectId", "$createdAt", "$updatedAt"],
+    "required": [
+      "name",
+      "description",
+      "type",
+      "status",
+      "$createdAt",
+      "$updatedAt"
+    ],
     "additionalProperties": false
   },
-  "Claim": {
+  "transactions": {
     "type": "object",
-    "transferable": 1,
-    "tradeMode": 1,
     "properties": {
-      "taskId": {
+      "poolId": {
         "position": 0,
         "type": "array",
+        "description": "The id of the pool",
         "byteArray": true,
         "minItems": 32,
         "maxItems": 32
       },
-      "amountCredits": {
+      "hash": {
         "position": 1,
-        "type": "number"
-      },
-      "amountUSD": {
-        "position": 2,
-        "type": "number"
-      },
-      "deliverable": {
-        "position": 3,
         "type": "string",
-        "description": "Claim deliverable",
-        "maxLength": 255
+        "description": "The hash of the transaction",
+        "maxLength": 1024
+      },
+      "type": {
+        "position": 2,
+        "type": "string",
+        "description": "The type of the transaction",
+        "enum": [
+          "DEPOSIT",
+          "WITHDRAWAL",
+          "PROTOXT"
+        ]
       }
     },
     "required": [
+      "poolId",
+      "hash",
+      "type",
       "$createdAt",
-      "$updatedAt",
-      "taskId",
-      "amountCredits",
-      "amountUSD",
-      "deliverable"
+      "$updatedAt"
+    ],
+    "additionalProperties": false
+  },
+  "utxos": {
+    "type": "object",
+    "properties": {
+      "transactionId": {
+        "position": 0,
+        "type": "array",
+        "description": "The id of the transaction",
+        "byteArray": true,
+        "minItems": 32,
+        "maxItems": 32
+      },
+      "hash": {
+        "position": 1,
+        "type": "string",
+        "description": "The hash of the utxo",
+        "maxLength": 255
+      },
+      "index": {
+        "position": 2,
+        "type": "integer",
+        "description": "The index of the utxo"
+      }
+    },
+    "required": [
+      "hash",
+      "index",
+      "$createdAt",
+      "$updatedAt"
+    ],
+    "additionalProperties": false
+  },
+  "signatures": {
+    "type": "object",
+    "properties": {
+      "utxoId": {
+        "position": 0,
+        "type": "array",
+        "description": "The id of the utxo",
+        "byteArray": true,
+        "minItems": 32,
+        "maxItems": 32
+      },
+      "signature": {
+        "position": 1,
+        "type": "string",
+        "description": "The signature of the utxo"
+      }
+    },
+    "required": [
+      "utxoId",
+      "signature",
+      "$createdAt",
+      "$updatedAt"
     ],
     "additionalProperties": false
   }

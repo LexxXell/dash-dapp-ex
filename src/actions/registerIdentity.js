@@ -1,25 +1,37 @@
 require("dotenv").config();
-const { initClient } = require("../utils");
+const {initClient} = require("../utils");
 
-async function createIdentity() {
-  console.log("Creating Identity");
+// Mnemonic phrase
+const mnemonic =
+  "";
 
-  const args = process.argv.slice(2);
-  const mnemonicType = args.includes('claimer') ? 'CLAIMER_MNEMONIC' : 'MNEMONIC';
+async function getIdentityKeys() {
+  // Create client instance
+  const client = initClient({mnemonic});
 
-  const mnemonic = process.env[mnemonicType];
+  try {
+    // Connect to the platform
+    await client.wallet.getAccount();
 
-  if (!mnemonic) {
-    throw new Error(`${mnemonicType} not set`);
+    // Get wallet account
+    const account = await client.getWalletAccount();
+
+    const {platform} = client;
+
+    // const identity = await platform.identities.register()
+    const identity = await platform.identities.get('Mvo9tNQoSAke368k5sSNaTMPeAH93EVrFQ8aXV5bd3j');
+
+    // await client.platform.identities.topUp(identity.getId(), 29000000);
+    await platform.names.register('lexxxell.dash', {identity: identity.getId()}, identity)
+
+    // await platform.names.
+    // console.log(identity.toJSON());
+    // Not enough balance (861030) to cover burn amount of 1000000
+  } catch (error) {
+    console.error("Error getting identity keys:", error);
+  } finally {
+    client.disconnect(); // Ensure the client is disconnected
   }
-
-  const client = initClient({ mnemonic });
-
-  const identity = await client.platform.identities.register();
-
-  console.log("Done", "\n", `Identity: ${identity.toJSON().id}`);
-
-  await client.disconnect();
 }
 
-createIdentity().catch(console.error);
+getIdentityKeys();
